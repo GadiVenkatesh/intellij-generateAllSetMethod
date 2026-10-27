@@ -15,18 +15,19 @@
 package generateAllSetter;
 
 import com.bruce.intellijplugin.generatesetter.CommonConstants;
+import com.intellij.codeInsight.intention.IntentionAction;
 import org.assertj.core.api.Assertions;
 
 public class GenerateAllSetterAbstractMethodTest extends BaseTest {
 
     public void testInterfaceMethodWithoutBodyIsNotAvailable() {
         myFixture.configureByText("Animal.java",
-                "interface Animal {\n" +
-                "    User getUser();\n" +
-                "}\n" +
-                "class User {\n" +
-                "    public void setName(String name) {}\n" +
-                "}\n");
+                "interface Animal {\\n" +
+                "    User getUser()<caret>;\\n" +
+                "}\\n" +
+                "class User {\\n" +
+                "    public void setName(String name) {}\\n" +
+                "}\\n");
 
         Assertions.assertThat(
                 myFixture.getAvailableIntention(CommonConstants.GENERATE_CONVERTER_FROM_METHOD)
@@ -35,12 +36,12 @@ public class GenerateAllSetterAbstractMethodTest extends BaseTest {
 
     public void testAbstractMethodWithoutBodyIsNotAvailable() {
         myFixture.configureByText("Animal.java",
-                "abstract class Animal {\n" +
-                "    abstract User getUser();\n" +
-                "}\n" +
-                "class User {\n" +
-                "    public void setName(String name) {}\n" +
-                "}\n");
+                "abstract class Animal {\\n" +
+                "    abstract User getUser()<caret>;\\n" +
+                "}\\n" +
+                "class User {\\n" +
+                "    public void setName(String name) {}\\n" +
+                "}\\n");
 
         Assertions.assertThat(
                 myFixture.getAvailableIntention(CommonConstants.GENERATE_CONVERTER_FROM_METHOD)

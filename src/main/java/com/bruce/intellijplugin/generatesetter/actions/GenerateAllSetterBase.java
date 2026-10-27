@@ -175,7 +175,7 @@ public abstract class GenerateAllSetterBase extends PsiElementBaseIntentionActio
             }
         } else if (psiParent instanceof PsiMethod) {
             PsiMethod method = (PsiMethod) psiParent;
-            if (method.getReturnType() == null) {
+            if (method.getReturnType() == null || method.getBody() == null) {
                 return;
             }
 
@@ -804,8 +804,8 @@ public abstract class GenerateAllSetterBase extends PsiElementBaseIntentionActio
             return false;
         }
         PsiMethod method = (PsiMethod) parentMethod;
-        // if is constructor the return type will be null.
-        if (method.getReturnType() == null) {
+        // A method without a body cannot accept generated code.
+        if (method.getReturnType() == null || method.getBody() == null) {
             return false;
         }
         PsiClass psiClass = PsiTypesUtil.getPsiClass(method.getReturnType());
